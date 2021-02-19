@@ -264,7 +264,7 @@ class crossval_table( Logger ):
         Arguments:
 
         - key: the column to be used for filter.
-        ''''
+        '''
         return best_inits.loc[best_inits.groupby(['et_bin', 'eta_bin', 'model_idx'])[key].idxmax(), :]
 
 
