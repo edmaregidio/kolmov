@@ -20,8 +20,9 @@ args = parser.parse_args()
 
 
 import keras2onnx, onnx
+from saphyra import RpLayer
 from tensorflow.keras.models import model_from_json
-model = model_from_json( open( args.json_file ).read() )
+model = model_from_json( open( args.json_file ).read(),custom_objects={'RpLayer':RpLayer} )
 model.load_weights( args.h5_file )
 onnx_model = keras2onnx.convert_keras(model)
 print('Saving ONNX file as '+ args.output_file)

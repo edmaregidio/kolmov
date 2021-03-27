@@ -15,6 +15,7 @@ import pandas as pd
 import os
 import json
 import tensorflow as tf
+from saphyra import RpLayer
 model_from_json = tf.keras.models.model_from_json
 
 
@@ -114,12 +115,12 @@ class crossval_table( Logger ):
 
             for idx, ituned in enumerate(tuned_file):
                 history = ituned['history']
-                #model = model_from_json( json.dumps(ituned['sequence'], separators=(',', ':')) , custom_objects={'RpLayer':RpLayer} )
-                #model.set_weights( ituned['weights'] )
+               # model = model_from_json( json.dumps(ituned['sequence'], separators=(',', ':')) , custom_objects={'RpLayer':RpLayer} )
+               # model.set_weights( ituned['weights'] )
 
                 # get the basic from model
                 dataframe['train_tag'].append(tag)
-                #dataframe['model'].append(model)
+               # dataframe['model'].append(model)
                 dataframe['model_idx'].append(ituned['imodel'])
                 dataframe['sort'].append(ituned['sort'])
                 dataframe['init'].append(ituned['init'])
@@ -666,7 +667,7 @@ class crossval_table( Logger ):
                 d_tuned = {}
                 best = best_sorts.loc[(best_sorts.et_bin==et_bin) & (best_sorts.eta_bin==eta_bin)]
                 tuned = load(best.file_name.values[0])['tunedData'][best.model_idx.values[0]]
-                model = model_from_json( json.dumps(tuned['sequence'], separators=(',', ':')) ) #custom_objects={'RpLayer':RpLayer} )
+                model = model_from_json( json.dumps(tuned['sequence'], separators=(',', ':')),custom_objects={'RpLayer':RpLayer} )
                 model.set_weights( tuned['weights'] )
                 new_model = Model(model.inputs, model.layers[-2].output) if remove_last else model
                 #new_model.summary()
